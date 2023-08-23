@@ -1,4 +1,5 @@
 package com.angelas.fullstack.backend.controller;
+import com.angelas.fullstack.backend.exception.UserNotFoundException;
 import  com.angelas.fullstack.backend.model.User;
 import com.angelas.fullstack.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,12 @@ public class UserController  {
     List<User> getAllUsers(){
        return  userRepository.findAll();
    }
+
+    @GetMapping("/user/{id}")
+    User getUserById(@PathVariable Long id){
+       return  userRepository.findById(id)
+               .orElseThrow(()->new UserNotFoundException(id));
+    }
+
 
 }
